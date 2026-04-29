@@ -77,14 +77,17 @@ export default function LandingPage() {
         transition={{ delay: 0.3, duration: 0.8 }}
       >
         {features.map((feature, index) => (
-          <div key={feature.id} data-feature>
-            <FeatureSection
-              feature={feature}
-              index={index}
-              isActive={activeSection === index}
-              onBookClick={() => setIsBookingOpen(true)}
-            />
-          </div>
+          <FeatureSection
+            key={feature.id}
+            id={feature.id}
+            title={feature.title}
+            subtitle={feature.subtitle}
+            description={feature.description}
+            imageUrl={feature.imageUrl}
+            accent={feature.accent as 'terracotta' | 'leaf-green' | 'lemon-gold' | 'mediterranean'}
+            reversed={index % 2 === 1}
+            onBookClick={() => setIsBookingOpen(true)}
+          />
         ))}
       </motion.section>
 

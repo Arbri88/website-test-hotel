@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Terrazza di Sole — Custom Styles */
+
+:root {
+  --mediterranean: #1A4B7A;
+  --lemon-gold: #E8A435;
+  --terracotta: #C75B39;
+  --linen: #FAF3E0;
+  --leaf-green: #5A8F6E;
+}
+
+body {
+  @apply bg-linen text-[#2C1810];
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ken Burns animation */
+@keyframes ken-burns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.1) translate(-1%, -1%); }
+}
+
+.ken-burns {
+  animation: ken-burns 20s ease-in-out infinite alternate;
+}
+
+/* Hero overlay */
+.hero-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(13, 59, 102, 0.3) 0%,
+    rgba(26, 75, 122, 0.15) 30%,
+    rgba(232, 164, 53, 0.1) 60%,
+    rgba(199, 91, 57, 0.2) 100%
+  );
+}
+
+/* CTA button */
+.cta-button {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(199, 91, 57, 0.4);
+}

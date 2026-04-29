@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String
+  role          Role      @default(user)
+  avatar        String?
+  phone         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  bookings      Booking[]
+  favorites     Favorite[]
+  reviews       Review[]
+  @@index([email])
+}
+
+enum Role {
+  user
+  admin
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String
+  roomType      String
+  checkIn       DateTime
+  checkOut      DateTime
+  guests        Int           @default(2)
+  totalPrice    Float
+  status        BookingStatus @default(pending)
+  paymentStatus PaymentStatus @default(unpaid)
+  createdAt     DateTime      @default(now())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  review        Review?
+  @@index([userId])
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  cancelled
+  completed
+}
+
+enum PaymentStatus {
+  unpaid
+  paid
+  refunded
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  roomType  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId, roomType])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  bookingId String   @unique
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model PropertyContent {
+  id          String   @id @default(cuid())
+  section     String
+  title       String
+  description String
+  imageUrl    String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([section])
+}

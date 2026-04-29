@@ -4,3 +4,4 @@ node_modules/
 *.db-journal
 .env.local
 
+.vercel

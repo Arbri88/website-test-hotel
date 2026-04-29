@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navigation from '@/components/landing/Navigation';
 import HeroSection from '@/components/landing/HeroSection';
 import FeatureSection from '@/components/landing/FeatureSection';
@@ -13,7 +13,8 @@ const features = [
     id: 'suites',
     title: 'Cliffside Suites',
     subtitle: 'Rooms with private balconies and floor-to-ceiling sea views',
-    description: 'Each suite is a sanctuary of hand-painted Vietri ceramic details, linen-draped beds, and terraces that spill into the Mediterranean sky.',
+    description:
+      'Each suite is a sanctuary of hand-painted Vietri ceramic details, linen-draped beds, and terraces that spill into the Mediterranean sky.',
     imageUrl: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80',
     accent: 'terracotta',
   },
@@ -21,7 +22,8 @@ const features = [
     id: 'spa',
     title: 'Limonaia Spa',
     subtitle: 'Treatments infused with local lemon and olive essences',
-    description: 'Nestled in a converted 18th-century lemon house, our spa channels centuries of Mediterranean wellness traditions.',
+    description:
+      'Nestled in a converted 18th-century lemon house, our spa channels centuries of Mediterranean wellness traditions.',
     imageUrl: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=80',
     accent: 'leaf-green',
   },
@@ -29,7 +31,8 @@ const features = [
     id: 'cucina',
     title: 'Cucina della Costa',
     subtitle: 'Michelin-adjacent tasting menus from the sea',
-    description: 'Hand-caught seafood at dawn, heirloom tomatoes still warm from the sun. Our chef transforms the Amalfi terroir into an experience.',
+    description:
+      'Hand-caught seafood at dawn, heirloom tomatoes still warm from the sun. Our chef transforms the Amalfi terroir into an experience.',
     imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80',
     accent: 'lemon-gold',
   },
@@ -37,7 +40,8 @@ const features = [
     id: 'sentiero',
     title: 'Sentiero degli Dei',
     subtitle: 'The legendary Path of the Gods, with gourmet picnics',
-    description: 'Walk the trail that connects heaven and earth. Our guides lead you along ancient paths carved into dramatic cliffs.',
+    description:
+      'Walk the trail that connects heaven and earth. Our guides lead you along ancient paths carved into dramatic cliffs.',
     imageUrl: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=1920&q=80',
     accent: 'mediterranean',
   },
@@ -64,15 +68,28 @@ export default function LandingPage() {
   return (
     <div className="relative min-h-screen bg-linen overflow-hidden">
       <Navigation onBookClick={() => setIsBookingOpen(true)} />
+
       <HeroSection onBookClick={() => setIsBookingOpen(true)} />
-      <section className="relative">
+
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      >
         {features.map((feature, index) => (
           <div key={feature.id} data-feature>
-            <FeatureSection feature={feature} index={index} isActive={activeSection === index} onBookClick={() => setIsBookingOpen(true)} />
+            <FeatureSection
+              feature={feature}
+              index={index}
+              isActive={activeSection === index}
+              onBookClick={() => setIsBookingOpen(true)}
+            />
           </div>
         ))}
-      </section>
+      </motion.section>
+
       <Footer onBookClick={() => setIsBookingOpen(true)} />
+
       <AnimatePresence>
         {isBookingOpen && <BookingModal onClose={() => setIsBookingOpen(false)} />}
       </AnimatePresence>

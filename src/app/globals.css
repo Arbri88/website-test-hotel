@@ -2,285 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ========================================
-   MOBILE-FIRST RESPONSIVE CSS
-   ======================================== */
+:root {
+  --color-mediterranean: #1A4B7A;
+  --color-lemon-gold: #E8A435;
+  --color-terracotta: #C75B39;
+  --color-linen: #FAF3E0;
+  --color-leaf-green: #5A8F6E;
+}
 
-@layer base {
-  :root {
-    scroll-behavior: smooth;
-  }
-
-  html {
-    -webkit-text-size-adjust: 100%;
-  }
-
-  body {
-    font-family: var(--font-source-sans), system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    background-color: #FAF3E0;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-playfair), Georgia, serif;
-    font-weight: 400;
-  }
-
-  ::selection {
-    background-color: #C75B39;
-    color: #FAF3E0;
-  }
+body {
+  font-family: var(--font-source-sans), 'Source Sans 3', system-ui, sans-serif;
+  background-color: var(--color-linen);
+  color: var(--color-mediterranean);
+  overflow-x: hidden;
 }
 
 @layer components {
-  /* ---- Ken Burns Animation ---- */
-  .animate-ken-burns {
-    animation: kenBurns 20s ease-in-out infinite alternate;
-  }
-
-  @keyframes kenBurns {
-    0% { transform: scale(1) translate(0, 0); }
-    100% { transform: scale(1.08) translate(-1%, -1%); }
-  }
-
-  /* ---- Hero Overlay Gradient ---- */
-  .hero-overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(10, 30, 50, 0.3) 0%,
-      rgba(10, 30, 50, 0.1) 40%,
-      rgba(26, 75, 122, 0.4) 100%
-    );
-  }
-
-  /* ---- CTA Button ---- */
-  .btn-reserve {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #C75B39;
-    color: #FAF3E0;
-    padding: 12px 24px;
-    border-radius: 9999px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    transition: all 0.35s ease;
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .btn-reserve:hover {
-    background: #B84B30;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(199, 91, 57, 0.35);
-  }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    color: #1A4B7A;
-    padding: 12px 20px;
-    border-radius: 9999px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid rgba(26, 75, 122, 0.25);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: 44px;
-  }
-
-  .btn-outline:hover {
-    border-color: #1A4B7A;
-    background: rgba(26, 75, 122, 0.04);
-  }
-
-  /* ---- Section Divider ---- */
-  .section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(232, 164, 53, 0.3), transparent);
-  }
-
-  /* ---- Text Shadows ---- */
-  .text-shadow {
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .text-shadow-lg {
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), 0 0 60px rgba(232, 164, 53, 0.1);
-  }
+  .nav-link { position: relative; color: var(--color-linen); text-decoration: none; transition: color 0.3s ease; }
+  .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--color-lemon-gold); transition: width 0.3s ease; }
+  .nav-link:hover { color: var(--color-lemon-gold); }
+  .nav-link:hover::after { width: 100%; }
+  .btn-reserve { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .btn-reserve:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(199, 91, 57, 0.4); }
+  .star-filled { color: var(--color-lemon-gold); }
+  .star-empty { color: #ccc; }
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 75, 122, 0.6); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; animation: fadeInUp 0.3s ease-out; }
+  .cream-shadow { text-shadow: 0 2px 30px rgba(250, 243, 224, 0.5), 0 4px 60px rgba(232, 164, 53, 0.2); }
+  .page-transition { animation: fadeInUp 0.6s ease forwards; }
+  .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 }
 
-/* ========================================
-   RESPONSIVE BREAKPOINTS - MOBILE FIRST
-   ======================================== */
+@keyframes goldenHour { 0% { background-position: 0% 50%; } 25% { background-position: 50% 100%; } 50% { background-position: 100% 50%; } 75% { background-position: 50% 0%; } 100% { background-position: 0% 50%; } }
+@keyframes kenBurns { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.15) translate(-2%, -2%); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Base (mobile < 640px) - Already defined above */
+.animate-golden-hour { animation: goldenHour 20s ease infinite; background-size: 400% 400%; }
+.animate-ken-burns { animation: kenBurns 20s ease-in-out infinite alternate; }
+.animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
 
-/* Small devices (640px+) */
-@media (min-width: 640px) {
-  .btn-reserve {
-    padding: 14px 32px;
-    font-size: 16px;
-  }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-linen); }
+::-webkit-scrollbar-thumb { background: var(--color-lemon-gold); border-radius: 4px; }
 
-  .hero-title {
-    font-size: 4.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.25rem;
-  }
-}
-
-/* Medium devices (768px+) */
-@media (min-width: 768px) {
-  .hero-title {
-    font-size: 6rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.5rem;
-  }
-
-  .feature-section {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-}
-
-/* Large devices (1024px+) */
-@media (min-width: 1024px) {
-  .hero-title {
-    font-size: 8rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.75rem;
-  }
-
-  .desktop-nav {
-    display: flex;
-  }
-
-  .mobile-menu-btn {
-    display: none;
-  }
-
-  .feature-grid {
-    display: grid;
-    grid-template-columns: 2fr 2fr;
-    gap: 5rem;
-  }
-
-  .feature-section {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-/* Extra large (1280px+) */
-@media (min-width: 1280px) {
-  .hero-title {
-    font-size: 9rem;
-  }
-
-  .feature-title {
-    font-size: 3.75rem;
-  }
-}
-
-/* ========================================
-   MOBILE-SPECIFIC FIXES
-   ======================================== */
-
-/* Ensure touch targets are 44px minimum */
-@media (max-width: 1023px) {
-  button, 
-  a, 
-  [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Hide desktop nav on mobile */
-  .desktop-nav {
-    display: none !important;
-  }
-
-  /* Show mobile menu button */
-  .mobile-menu-btn {
-    display: flex !important;
-  }
-
-  /* Stack feature sections on mobile */
-  .feature-grid {
-    display: block;
-  }
-
-  .feature-image {
-    margin-bottom: 2rem;
-  }
-
-  /* Stack footer on mobile */
-  .footer-grid {
-    display: block;
-  }
-
-  /* Reduce font sizes for mobile */
-  .hero-title {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  .feature-title {
-    font-size: 2rem;
-  }
-
-  /* Reduce padding on mobile */
-  .section-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  /* Make modals full-screen on mobile */
-  .modal-content {
-    width: 95vw;
-    max-width: 95vw;
-  }
-}
-
-/* Prevent horizontal scroll on mobile */
-@media (max-width: 640px) {
-  html, body {
-    overflow-x: hidden;
-    max-width: 100vw;
-  }
-
-  * {
-    max-width: 100vw;
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
+@media (max-width: 768px) {
+  .feature-cards { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .feature-card { scroll-snap-align: center; }
 }

@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          String    @default("user")
+  createdAt     DateTime  @default(now())
+  favorites     Favorite[]
+  bookings      Booking[]
+  reviews       Review[]
+}
+
+model Room {
+  id          String     @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  images      String     // JSON array of image URLs as string
+  amenities   String     // JSON array of amenities as string
+  capacity    Int
+  createdAt   DateTime   @default(now())
+  bookings    Booking[]
+  reviews     Review[]
+  favorites   Favorite[]
+}
+
+model Booking {
+  id            String   @id @default(cuid())
+  userId        String
+  roomId        String
+  checkIn       String
+  checkOut      String
+  guests        Int
+  totalPrice    Float
+  status        String   @default("confirmed")
+  paymentStatus String   @default("pending")
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id])
+  room          Room     @relation(fields: [roomId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  roomId    String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
+}
+
+model Favorite {
+  id     String @id @default(cuid())
+  userId String
+  roomId String
+  user   User   @relation(fields: [userId], references: [id])
+  room   Room   @relation(fields: [roomId], references: [id])
+
+  @@unique([userId, roomId])
+}
